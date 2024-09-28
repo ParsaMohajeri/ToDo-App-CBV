@@ -4,6 +4,9 @@ from django.contrib.auth.models import (BaseUserManager,AbstractBaseUser,Permiss
 
 # Create your models here.
 class User (AbstractBaseUser,PermissionMixin):
+    """
+    this is authentication model
+    """
     username=models.CharField(max_length=250,unique=True)
     email=models.EmailField(max_length=255,unique=True)
     is_staff=models.BooleanField(default=False)
