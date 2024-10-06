@@ -5,7 +5,9 @@ from django.contrib.auth.models import (BaseUserManager,AbstractBaseUser,Permiss
 # Create your models here.
 
 class UserManager(BaseUserManager):
-    # this is class to handle local users and super users
+    """
+    this is class to handle local users and super users
+    """
     def create_user(self, email, password,**extra_fields):
         if not email:
             raise ValueError(_("the email must be set"))
