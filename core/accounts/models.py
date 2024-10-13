@@ -43,6 +43,8 @@ class User (AbstractBaseUser,PermissionMixin):
     is_staff=models.BooleanField(default=False)
     is_active=models.BooleanField(default=True)
     # is_verified=models.BooleanField(default=False)
+
+    USERNAME_FIELD ='email'
     REQUIRED_FIELDS=[]
 
     created_date=models.DateField(auto_now_add=True)
