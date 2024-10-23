@@ -1,7 +1,7 @@
 # import part
 
 from django.db import models
-from django.contrib.auth.models import (BaseUserManager,AbstractBaseUser,PermissionMixin)
+from django.contrib.auth.models import (BaseUserManager,AbstractBaseUser,PermissionsMixin)
 
 
 # Create your models here.
@@ -33,7 +33,7 @@ class UserManager(BaseUserManager):
         return self.create_user(email,password,**extra_fields)
 
 
-class User (AbstractBaseUser,PermissionMixin):
+class User (AbstractBaseUser,PermissionsMixin):
     """
     this is authentication model
     """
