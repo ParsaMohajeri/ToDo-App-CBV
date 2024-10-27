@@ -1,6 +1,6 @@
 # import part
 from django.apps import AppConfig
-
+# ______________________________________________________________________________
 
 class BlogConfig(AppConfig):
     """
