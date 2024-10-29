@@ -1,6 +1,7 @@
 # import part
 from django.apps import AppConfig
 
+# _____________________________________________________________________________
 
 class AccountsConfig(AppConfig):
     """
