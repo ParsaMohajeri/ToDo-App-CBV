@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser, PermissionsMixin)
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class UserManager(BaseUserManager):
     def create_user(self, username, email, password=None, **extra_fields):
@@ -11,7 +13,7 @@ class UserManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(username=username, email=email, **extra_fields)
         user.set_password(password)
-        user.save(using=self._db)
+        user.save()
         return user
 
     def create_superuser(self, username, email, password=None, **extra_fields):
@@ -32,13 +34,20 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
+
+    USERNAME_FIELD = 'username'  # Use username for authentication
+    REQUIRED_FIELDS = ['email']  # Email is still required, but not used for login
+
+
     created_date = models.DateField(auto_now_add=True)
     updated_date = models.DateField(auto_now=True)
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'username'  # Use username for authentication
-    REQUIRED_FIELDS = ['email']  # Email is still required, but not used for login
-
     def __str__(self):
         return self.username
+
+@receiver(post_save,sender=User)
+def save_profile(sender,instance,created,**kwargs):
+    if created: 
+        User.objects.create()
