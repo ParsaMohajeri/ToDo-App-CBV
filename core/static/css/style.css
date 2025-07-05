@@ -1,0 +1,47 @@
+/* فونت اصلی */
+body {
+    font-family: 'Vazirmatn', sans-serif;
+    background-color: #f8f9fa;
+    padding: 2rem;
+    color: #333;
+}
+
+/* عنوان صفحه */
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    color: #222;
+}
+
+/* لینک تسک‌ها */
+.task-link {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.task-link:hover {
+    text-decoration: underline;
+}
+
+/* باکس هر تسک */
+.task-box {
+    background-color: #ffffff;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    margin-bottom: 1.5rem;
+}
+
+/* دکمه‌ها */
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-right: 8px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
