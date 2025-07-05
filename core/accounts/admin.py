@@ -8,18 +8,18 @@ from .models import User
 
 class CustomeUserAdmin(UserAdmin):
     model=User 
-    list_display =('email','is_superuser','is_active')
-    list_filter =('email','is_superuser','is_active')
-    searching_fields=('email',)
-    ordering=('email',)
+    list_display =('username','email','is_superuser','is_active')
+    list_filter =('username','email','is_superuser','is_active')
+    searching_fields=('username','email',)
+    ordering=('username',)
     fieldsets = [
-        ('Athentication', {"fields": ["email", "password"]}),
+        ('Athentication', {"fields": ["username", "password"]}),
         ("Permissions", {"fields": ["is_staff","is_active","is_superuser"]}),
         ("group permissions", {"fields": ["groups","user_permissions"]}),
         ("important date", {"fields": ["last_login"]}),
     ]
     add_fieldsets = [
-        (None,{"classes": ["wide"],"fields": ["email", "password1","password2", "is_staff", "is_active","is_superuser"],},),
+        (None,{"classes": ["wide"],"fields": ["username", "password1","password2", "is_staff", "is_active","is_superuser"],},),
     ]
 
 admin.site.register(User,CustomeUserAdmin)
