@@ -11,6 +11,7 @@ class Task(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='tasks/',null=True, blank=True)
     title = models.CharField(max_length=30)
+    is_done = models.BooleanField(default=False)
     content = models.TextField(max_length=250)
     status = models.BooleanField(default=False)
     created_date = models.DateField(auto_now_add=True)

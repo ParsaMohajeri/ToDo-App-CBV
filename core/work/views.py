@@ -4,6 +4,7 @@ from .models import Task
 from django.views.generic import ListView,DetailView,FormView,CreateView,UpdateView,DeleteView
 from .forms import TaskForm
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
+from django.shortcuts import get_object_or_404, redirect
 # ________________________________________________________________
 # Create your views here.
 
@@ -56,4 +57,8 @@ class TaskDeleteView(LoginRequiredMixin,DeleteView):
     model=Task
     success_url="/"
 
-
+def toggle_task_status(request, pk):
+    task = get_object_or_404(Task, pk=pk)
+    task.is_done = not task.is_done
+    task.save()
+    return redirect('work:task-list')

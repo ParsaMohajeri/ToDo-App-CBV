@@ -13,5 +13,7 @@ urlpatterns = [
     path('create/',views.TaskCreateView.as_view(), name = "task-create"),
     path('<int:pk>/edit/',views.TaskEditView.as_view(), name = "task-edit"),
     path('<int:pk>/delete/',views.TaskDeleteView.as_view(), name = "task-delete"),
+    path('task/<int:pk>/toggle/', views.toggle_task_status, name='toggle-task'),
+
     # path('go-to-index/',views.RedirectToMaktab.as_view(),name='redirect-to-maktab' ),
 ]
