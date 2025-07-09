@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth import login
 from django.shortcuts import redirect
 
-from .forms import CustomAuthenticationForm
+from .forms import CustomAuthenticationForm , CustomUserCreationForm
 
 
 class CustomLogoutView(LogoutView):
@@ -24,17 +24,11 @@ class CustomLoginView(LoginView):
 
 class RegisterPage(FormView):
     template_name = "registration/register.html"
-    form_class = CustomAuthenticationForm
-    redirect_authenticated_user = True
+    form_class = CustomUserCreationForm
     success_url = reverse_lazy("work:task-list")
 
     def form_valid(self, form):
-        user = form.save()
-        if user is not None:
-            login(self.request, user)
+        user = form.save(commit=False)
+        user.save()
+        login(self.request, user)
         return super().form_valid(form)
-
-    def get(self, *args, **kwargs):
-        if self.request.user.is_authenticated:
-            return redirect("work:task-list")
-        return super().get(*args, **kwargs)

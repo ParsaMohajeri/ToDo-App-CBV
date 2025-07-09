@@ -47,7 +47,3 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.username
 
-@receiver(post_save,sender=User)
-def save_profile(sender,instance,created,**kwargs):
-    if created: 
-        User.objects.create()
