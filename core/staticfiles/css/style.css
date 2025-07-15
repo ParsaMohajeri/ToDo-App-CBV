@@ -45,3 +45,16 @@ h1 {
     font-size: 0.9rem;
     transition: background-color 0.3s ease;
 }
+body {
+    direction: ltr;
+    text-align: left;
+}
+.btn {
+    transition: background-color 0.2s;
+}
+.btn:hover {
+    filter: brightness(90%);
+}
+.dropdown-menu {
+    border-radius: 0.5rem;
+}
