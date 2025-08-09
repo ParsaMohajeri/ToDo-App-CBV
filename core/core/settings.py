@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'accounts',
     'work',
+    'rest_framework',
+    'django_filters',
+
 ]
 
 MIDDLEWARE = [
@@ -143,3 +146,8 @@ AUTH_USER_MODEL = 'accounts.User'
 LOGIN_URL = "accounts:login"
 LOGIN_REDIRECT_URL = "/"  
 LOGOUT_REDIRECT_URL = LOGIN_URL
+
+
+REST_FRAMEWORK = { 
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+}

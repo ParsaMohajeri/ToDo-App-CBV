@@ -1,4 +1,7 @@
-django >3.2,<3.3
+Django==3.2.25
+djangorestframework==3.12.4
+django-widget-tweaks
+markdown
 python-decouple
 Pillow
-django-widget-tweaks
+django-filter
