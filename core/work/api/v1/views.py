@@ -13,6 +13,7 @@ from .permissions import IsOwnerOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter,OrderingFilter
 from .paginations import DefaultPagination
+from django.shortcuts import redirect
 data={
     "id":1,
     "title":"hello"
@@ -38,3 +39,8 @@ class TaskModelViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return Task.objects.filter(author=self.request.user)
 
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('/accounts/login/')
+        return super().dispatch(request, *args, **kwargs)

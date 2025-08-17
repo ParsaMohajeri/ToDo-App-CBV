@@ -42,7 +42,6 @@ class TaskSerializer (serializers.ModelSerializer):
 
     def create(self, validated_data):
     
-        validated_data['author'] = self.context.get('request').user
+        validated_data['author'] = self.context['request'].user
         return super().create(validated_data)
-    
 
