@@ -21,7 +21,7 @@ data={
 
 
 class TaskModelViewSet(viewsets.ModelViewSet):
-    permission_classes=[IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly]
+    permission_classes=[IsAuthenticated,IsOwnerOrReadOnly]
     serializer_class=TaskSerializer
     queryset = Task.objects.all()
     filter_backends =[DjangoFilterBackend,SearchFilter,OrderingFilter]    
@@ -33,14 +33,9 @@ class TaskModelViewSet(viewsets.ModelViewSet):
 
 
 
-
-
-
     def get_queryset(self):
-        return Task.objects.filter(author=self.request.user)
+        user = self.request.user
+        if user.is_authenticated:
+            return Task.objects.filter(author=user)
+        return Task.objects.none()
 
-
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return redirect('/accounts/login/')
-        return super().dispatch(request, *args, **kwargs)

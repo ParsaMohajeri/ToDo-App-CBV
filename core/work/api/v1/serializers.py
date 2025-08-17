@@ -8,9 +8,10 @@ from accounts.models import User
 
 
 class TaskSerializer (serializers.ModelSerializer):
+    absolute_url = serializers.SerializerMethodField(method_name="get_abs_url")
     class Meta:
         model =Task
-        fields = ['id','author','title','is_done','content','created_date' ,'updated_date','deadline']
+        fields = ['id','author','title','is_done','absolute_url','content','created_date' ,'updated_date','deadline']
 
         read_only_fields = ['author']
 
@@ -18,6 +19,9 @@ class TaskSerializer (serializers.ModelSerializer):
     def get_abs_url(self,obj):
         request =self.context.get('request')
         return request.build_absolute_uri(obj.pk)
+    
+
+    
 
 
 
@@ -32,6 +36,8 @@ class TaskSerializer (serializers.ModelSerializer):
         rep['state']='list'
         if request.parser_context.get('kwargs').get('pk'):
             rep['state']='single'
+            rep.pop("absolute_url", None)
+
         else:
             rep.pop('content',None)
         return rep
