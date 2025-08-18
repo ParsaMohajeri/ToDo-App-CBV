@@ -1,7 +1,14 @@
-Django==3.2.25
-djangorestframework==3.12.4
-django-widget-tweaks
-markdown
+# general modules
+django==4.2.14
+djangorestframework==3.14.0
 python-decouple
 Pillow
-django-filter
+coreapi
+openapi-codec
+
+# third party modules
+markdown
+django-filter==23.5
+drf-yasg[validation]==1.21.7
+
+# deployment module

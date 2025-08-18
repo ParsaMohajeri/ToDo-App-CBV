@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path,include
 from . import views
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
@@ -14,6 +14,7 @@ urlpatterns = [
     path('<int:pk>/edit/',views.TaskEditView.as_view(), name = "task-edit"),
     path('<int:pk>/delete/',views.TaskDeleteView.as_view(), name = "task-delete"),
     path('task/<int:pk>/toggle/', views.toggle_task_status, name='toggle-task'),
+    path('api/v1/',include('work.api.v1.urls'))
 
     # path('go-to-index/',views.RedirectToMaktab.as_view(),name='redirect-to-maktab' ),
 ]
