@@ -34,7 +34,6 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
 class CustomAuthTokenSerializer(serializers.Serializer):
     username=serializers.CharField(label=_("Username"), write_only=True)
-    email = serializers.CharField(label=_("Email"), write_only=True)
     password = serializers.CharField(
         label=_("Password"),
         style={"input_type": "password"},
@@ -47,11 +46,10 @@ class CustomAuthTokenSerializer(serializers.Serializer):
         username = attrs.get("username")
         email = attrs.get("email")
         password = attrs.get("password")
-        identifier = email or username 
-        if identifier and password:
+        if username and password:
             user = authenticate(
                 request=self.context.get("request"),
-                username=identifier,
+                username=username,
                 password=password,
             )
 
