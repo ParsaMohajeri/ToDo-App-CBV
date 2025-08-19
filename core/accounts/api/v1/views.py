@@ -14,7 +14,6 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import get_user_model
-from ...models import Profile
 from django.shortcuts import get_object_or_404
 from ..utils import EmailThread , generate_activation_token
 from mail_templated import EmailMessage

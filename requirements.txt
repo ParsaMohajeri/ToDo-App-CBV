@@ -6,7 +6,6 @@ Pillow
 coreapi
 openapi-codec
 django-widget-tweaks
-djoser
 
 # third party modules
 markdown==3.4.4

@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'drf_yasg',
     "rest_framework_simplejwt",
     "mail_templated",
-    "djoser",
 
 ]
 
@@ -164,6 +163,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+
 }
 
 

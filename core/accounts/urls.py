@@ -10,7 +10,7 @@ urlpatterns = [
     path('logout/', CustomLogoutView.as_view(), name='logout'),
     path("register/", RegisterPage.as_view(), name="register"),
     path("", include("django.contrib.auth.urls")),
-    # path('api/v1/', include('accounts.api.v1.urls')),
-    path("api/v1/", include("djoser.urls")),
-    path("api/v1/", include("djoser.urls.jwt")),
+    path('api/v1/', include('accounts.api.v1.urls')),
+    # path("api/v1/", include("urls")),
+    # path("api/v1/", include("urls.jwt")),
 ]
