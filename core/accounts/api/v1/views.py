@@ -6,6 +6,8 @@ from .serializers import (
     CustomTokenObtainPairSerializer,
     ChangePasswordSerializer,
     ActivationResendApiSerializer,
+    PasswordResetRequestSerializer,
+    PasswordResetConfirmApiSerializer,
 )
 from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -15,7 +17,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
-from ..utils import EmailThread , generate_activation_token
+from ..utils import EmailThread , generate_activation_token , generate_unique_token
 from mail_templated import EmailMessage
 from rest_framework_simplejwt.tokens import RefreshToken,AccessToken
 
@@ -174,6 +176,53 @@ class ActivationResendApiView(generics.GenericAPIView):
             status=status.HTTP_200_OK,
         )
 
-    def get_token_for_user(self, user):
-        refresh = RefreshToken.for_user(user)
-        return str(refresh.access_token)
+
+
+
+
+class PasswordResetRequestApiView(generics.GenericAPIView):
+    serializer_class = PasswordResetRequestSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = PasswordResetRequestSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user_obj = serializer.validated_data["user"]
+        token = generate_unique_token(user_obj)
+        email_obj = EmailMessage(
+            "email/password_reset_email.tpl",
+            {"token": token},
+            "parsamohajeri1188@gmail.com",
+            to=[user_obj.email],
+        )
+        EmailThread(email_obj).start()
+        return Response(
+            {"details": "password reset email sent successfully"},
+            status=status.HTTP_200_OK,
+        )
+
+
+
+
+class PasswordResetConfirmApiView(generics.GenericAPIView):
+    model = User
+    serializer_class = PasswordResetConfirmApiSerializer
+
+    def put(self, request, *args, **kwargs):
+        token =  kwargs.get("token")
+        if not token:
+            return Response({"detail": "Token is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            token_obj = AccessToken(token)
+            user_id = token_obj["user_id"]
+            user = User.objects.get(id=user_id)
+        except Exception as e:
+            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            user.set_password(serializer.validated_data.get("new_password"))
+            user.save()
+            return Response({"details": "password reset successfully"}, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

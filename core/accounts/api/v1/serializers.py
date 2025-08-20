@@ -102,7 +102,7 @@ class ChangePasswordSerializer(serializers.Serializer):
                 {"new_password": list(e.messages)}
             )
 
-        return super().validate(attrs)
+        return super().validate(attrs)  
 
 
 
@@ -132,3 +132,44 @@ class ActivationResendApiSerializer(serializers.Serializer):
         attrs["user"] = user_obj
 
         return super().validate(attrs)
+
+
+
+class PasswordResetRequestSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+
+    def validate(self, attrs):
+        email = attrs.get("email")
+
+        try:
+            user_obj = User.objects.get(email=email)
+        except User.DoesNotExist:
+            raise serializers.ValidationError(
+                {"details": "user does not exist"}
+            )
+
+
+        attrs["user"] = user_obj
+
+        return super().validate(attrs)
+
+
+
+class PasswordResetConfirmApiSerializer(serializers.Serializer):
+    new_password = serializers.CharField(required=True)
+    new_password1 = serializers.CharField(required=True)
+
+    def validate(self, attrs):
+        if attrs.get("new_password") != attrs.get("new_password1"):
+            raise serializers.ValidationError(
+                {"detail": "passwords isnt match"}
+            )
+
+        try:
+            validate_password(attrs.get("new_password"))
+        except exceptions.ValidationError as e:
+            raise serializers.ValidationError(
+                {"new_password": list(e.messages)}
+            )
+
+        return super().validate(attrs)  
