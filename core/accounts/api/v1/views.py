@@ -204,11 +204,10 @@ class PasswordResetRequestApiView(generics.GenericAPIView):
 
 
 class PasswordResetConfirmApiView(generics.GenericAPIView):
-    model = User
     serializer_class = PasswordResetConfirmApiSerializer
 
     def put(self, request, *args, **kwargs):
-        token =  kwargs.get("token")
+        token = kwargs.get("token")   
         if not token:
             return Response({"detail": "Token is required"}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -216,13 +215,15 @@ class PasswordResetConfirmApiView(generics.GenericAPIView):
             token_obj = AccessToken(token)
             user_id = token_obj["user_id"]
             user = User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            return Response({"detail": "User not found"}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
-            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": "Invalid or expired token"}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            user.set_password(serializer.validated_data.get("new_password"))
-            user.save()
-            return Response({"details": "password reset successfully"}, status=status.HTTP_200_OK)
+        serializer.is_valid(raise_exception=True)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        user.set_password(serializer.validated_data["new_password"])
+        user.save()
+
+        return Response({"details": "password reset successfully"}, status=status.HTTP_200_OK)
