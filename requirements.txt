@@ -1,14 +1,26 @@
 # general modules
 django==4.2.14
 djangorestframework==3.14.0
-python-decouple
+python-decouple==3.8
 Pillow
 coreapi
 openapi-codec
+django-widget-tweaks
 
 # third party modules
-markdown
+markdown==3.4.4
 django-filter==23.5
 drf-yasg[validation]==1.21.7
+djangorestframework-simplejwt
 
 # deployment module
+
+
+# email third party modules
+django-mail-templated
+
+
+
+# refactoring and test
+black
+flake8
