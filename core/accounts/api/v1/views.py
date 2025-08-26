@@ -58,7 +58,7 @@ class RegistrationApiView(generics.GenericAPIView):
         return str(refresh.access_token)
 
 
-class CustomAuthToken(ObtainAuthToken):
+class CustomObtainAuthToken(ObtainAuthToken):
     serializer_class = CustomAuthTokenSerializer
 
     def post(self, request, *args, **kwargs):
@@ -87,7 +87,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
 class ChangePasswordApiView(generics.GenericAPIView):
     model = User
-    permission_classes = (IsAuthenticated,)
+    permission_classes = [IsAuthenticated]
     serializer_class = ChangePasswordSerializer
 
     def get_object(self):
