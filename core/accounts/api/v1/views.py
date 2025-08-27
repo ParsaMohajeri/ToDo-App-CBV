@@ -88,6 +88,8 @@ class ChangePasswordApiView(generics.GenericAPIView):
     model = User
     permission_classes = [IsAuthenticated]
     serializer_class = ChangePasswordSerializer
+    authentication_classes = [TokenAuthentication]
+
 
     def get_object(self):
         obj = self.request.user
