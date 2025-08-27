@@ -27,18 +27,15 @@ class TestObtainTokenApiView:
             "username": "Parsa",
             "password": "a@/1234567",
         }
-        user=common_user
-        api_client.force_authenticate(user=user)
         response = api_client.post(url, data)
         assert response.status_code == 200
+        assert "token" in response.data  # اگه view توکن برمی‌گردونه
 
     def test_login_user_password_mismatch(self, common_user, api_client):
         url = reverse("accounts:api-v1:token-login")
         data = {
-            "username": "testuser",
+            "username": "Parsa",
             "password": "123",
         }
-        user=common_user
-        api_client.force_authenticate(user=user)
         response = api_client.post(url, data)
         assert response.status_code == 400
