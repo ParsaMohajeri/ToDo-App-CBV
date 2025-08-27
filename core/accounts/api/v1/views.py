@@ -25,13 +25,11 @@ from rest_framework_simplejwt.exceptions import AuthenticationFailed
 import jwt
 from jwt.exceptions import ExpiredSignatureError, InvalidSignatureError
 from django.conf import settings
-from rest_framework.permissions import AllowAny
 
 User = get_user_model()
 
 
 class RegistrationApiView(generics.GenericAPIView):
-    permission_classes = [AllowAny]
     serializer_class = RegistrationSerializer
 
     def post(self, request, *args, **kwargs):
