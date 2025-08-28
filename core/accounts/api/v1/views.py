@@ -25,13 +25,11 @@ from rest_framework_simplejwt.exceptions import AuthenticationFailed
 import jwt
 from jwt.exceptions import ExpiredSignatureError, InvalidSignatureError
 from django.conf import settings
-from rest_framework.permissions import AllowAny
-
+from rest_framework.authentication import TokenAuthentication
 User = get_user_model()
 
 
 class RegistrationApiView(generics.GenericAPIView):
-    permission_classes = [AllowAny]
     serializer_class = RegistrationSerializer
 
     def post(self, request, *args, **kwargs):
@@ -74,6 +72,7 @@ class CustomObtainAuthToken(ObtainAuthToken):
 
 
 class CustomDiscardAuthToken(APIView):
+    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
     def post(self,request):
@@ -89,6 +88,8 @@ class ChangePasswordApiView(generics.GenericAPIView):
     model = User
     permission_classes = [IsAuthenticated]
     serializer_class = ChangePasswordSerializer
+    authentication_classes = [TokenAuthentication]
+
 
     def get_object(self):
         obj = self.request.user
