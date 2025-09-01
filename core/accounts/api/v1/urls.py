@@ -5,6 +5,7 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 from . import views
+
 app_name = "api-v1"
 
 
@@ -35,12 +36,15 @@ urlpatterns = [
         views.CustomDiscardAuthToken.as_view(),
         name="token-logout",
     ),
-    path("password-reset/request/",
-         views.PasswordResetRequestApiView.as_view(),
-         name='password-reset-request'),
-    path("password-reset/confirm/<str:token>/",
-         views.PasswordResetConfirmApiView.as_view(),
-         name='password-reset-confirm'
+    path(
+        "password-reset/request/",
+        views.PasswordResetRequestApiView.as_view(),
+        name="password-reset-request",
+    ),
+    path(
+        "password-reset/confirm/<str:token>/",
+        views.PasswordResetConfirmApiView.as_view(),
+        name="password-reset-confirm",
     ),
     path(
         "jwt/create/",

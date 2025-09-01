@@ -1,4 +1,3 @@
-
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic.edit import FormView
@@ -6,11 +5,11 @@ from django.urls import reverse_lazy
 from django.contrib.auth import login
 from django.shortcuts import redirect
 
-from .forms import CustomAuthenticationForm , CustomUserCreationForm
+from .forms import CustomAuthenticationForm, CustomUserCreationForm
 
 
 class CustomLogoutView(LogoutView):
-    next_page = reverse_lazy('accounts:login')
+    next_page = reverse_lazy("accounts:login")
 
 
 class CustomLoginView(LoginView):
