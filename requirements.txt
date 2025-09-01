@@ -23,6 +23,7 @@ django-mail-templated
 
 # refactoring and test
 black
+autoflake
 flake8
 pytest
 pytest-django

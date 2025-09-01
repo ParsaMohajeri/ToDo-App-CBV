@@ -3,15 +3,17 @@ from rest_framework.test import APIClient
 from django.urls import reverse
 from ..models import User
 
+
 @pytest.fixture
 def common_user():
     user = User.objects.create_user(
         username="Parsa",
         email="parsa@example.com",
         password="a@/1234567",
-        is_verified=True 
-    )  
-    return user 
+        is_verified=True,
+    )
+    return user
+
 
 @pytest.fixture
 def api_client():
@@ -20,7 +22,7 @@ def api_client():
 
 @pytest.mark.django_db
 class TestObtainTokenApiView:
-    
+
     def test_login_user_success(self, common_user, api_client):
         url = reverse("accounts:api-v1:token-login")
         data = {

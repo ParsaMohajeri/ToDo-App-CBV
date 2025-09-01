@@ -11,15 +11,14 @@ def common_user():
         username="Parsa",
         email="parsa@example.com",
         password="a@/1234567",
-        is_verified=True 
-    )  
-    return user 
+        is_verified=True,
+    )
+    return user
+
 
 @pytest.fixture
 def api_client():
     return APIClient(enforce_csrf_checks=False)
-
-
 
 
 @pytest.mark.django_db

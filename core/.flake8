@@ -1,0 +1,22 @@
+[flake8]
+exclude=
+    .git,
+    __pycache__,
+    old,
+    build,
+    dist,
+    migrations,
+    env,
+    venv,
+    manage.py,
+    conftest.py,
+    pytest.ini,
+    core/settings.py,
+    docker-compose.yml
+
+ignore = 
+    E501
+    F401
+    F403
+    F841
+    F811
