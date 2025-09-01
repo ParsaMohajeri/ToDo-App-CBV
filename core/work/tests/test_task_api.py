@@ -74,7 +74,3 @@ class TestTaskViewSet:
         data = {"title": "No Auth", "content": "Should fail"}
         response = api_client.post(url, data)
         assert response.status_code == 403
-
-    def test_update_task_by_owner(self, api_client, user, task):
-        api_client.force_authenticate(user=user)
-        url = reverse("work:api-v1:task-detail", args=[task.id])

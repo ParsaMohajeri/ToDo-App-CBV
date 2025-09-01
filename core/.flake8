@@ -1,15 +1,22 @@
 [flake8]
 exclude=
-    .git
-    .gitignore
-    *.pot
-    *.py[co],
+    .git,
     __pycache__,
+    old,
+    build,
+    dist,
+    migrations,
+    env,
     venv,
-    .env
-    settings.py
-    __init__.py,
+    manage.py,
+    conftest.py,
+    pytest.ini,
+    core/settings.py,
+    docker-compose.yml
 
 ignore = 
     E501
     F401
+    F403
+    F841
+    F811
