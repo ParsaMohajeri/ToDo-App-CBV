@@ -4,7 +4,10 @@ from .models import Task
 
 # Register your models here.
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ["author", "title", "created_date", "deadline"]
+    model=Task
+    list_display = ["is_done", "title", "created_date", "deadline"]
+    ordering = ("created_date",)
+    list_filter = ("title", "is_done")
 
 
-admin.site.register(Task)
+admin.site.register(Task,TaskAdmin)
