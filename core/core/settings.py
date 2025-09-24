@@ -178,3 +178,7 @@ EMAIL_PORT = 25
 
 # celery configs
 CELERY_BROKER_URL = 'redis://redis:6379/1'
+
+
+
+OPENWEATHER_API_KEY = "faf83980bcf288062ec82185ed821ac3"
