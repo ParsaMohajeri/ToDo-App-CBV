@@ -59,13 +59,16 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from django.conf import settings
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie, vary_on_headers
 
 
 class WeatherViewSet(viewsets.ViewSet):
-
-
+    @method_decorator(cache_page(60 * 20))
     @action(detail=False, methods=['get'])
     def current(self, request):
+        
         city = request.query_params.get("city", "Tehran")
         api_key = settings.OPENWEATHER_API_KEY 
         url = "https://api.openweathermap.org/data/2.5/weather"
